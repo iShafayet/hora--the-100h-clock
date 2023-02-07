@@ -24,6 +24,7 @@
   // Pages
   import DashboardPage from "./component/page/DashboardPage.svelte";
   import ConverterPage from "./component/page/ConverterPage.svelte";
+  import PhilosophyPage from "./component/page/PhilosophyPage.svelte";
   // Components
   import Footer from "./component/common/Footer.svelte";
   import ObtrusiveLoader from "./component/common/ObtrusiveLoader.svelte";
@@ -61,9 +62,14 @@
     component: ConverterPage,
   });
 
+  const philosophyRoute = wrap({
+    component: PhilosophyPage,
+  });
+
   const routes = {
     "/dashboard": dashboardRoute,
     "/converter": converterRoute,
+    "/philosophy": philosophyRoute,
     "/": dashboardRoute,
   };
 
@@ -123,6 +129,13 @@
           activated={true}
         >
           <Text>Converter</Text>
+        </Item>
+        <Item
+          href="javascript:void(0)"
+          on:click={() => genericLinkClicked(`/philosophy`)}
+          activated={true}
+        >
+          <Text>Philosophy</Text>
         </Item>
       </List>
     </Content>
