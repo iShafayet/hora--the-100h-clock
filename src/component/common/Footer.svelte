@@ -4,7 +4,12 @@
 
 <div class="copyright">
   <div>
-    2022 © <a href={CommonConstant.COPYRIGHT_HREF} target="_blank" rel="noreferrer">
+    2022 © <a
+      href={CommonConstant.COPYRIGHT_HREF}
+      target="_blank"
+      rel="noreferrer"
+      class="footer-link"
+    >
       {CommonConstant.COPYRIGHT_HREF}
     </a>
   </div>
@@ -21,5 +26,9 @@
     color: rgb(155, 155, 155);
     padding-bottom: 8px;
     padding-top: 8px;
+  }
+
+  .footer-link {
+    color: #102027;
   }
 </style>

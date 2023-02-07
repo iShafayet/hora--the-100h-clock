@@ -69,6 +69,17 @@
     if (minute < 0) minute = 0;
     if (hour < 0) hour = 0;
 
+    if (shouldNormalizeTime) {
+      if (second >= 60) {
+        minute += Math.floor(second / 60);
+        second = second % 60;
+      }
+      if (minute >= 60) {
+        hour += Math.floor(minute / 60);
+        minute = minute % 60;
+      }
+    }
+
     let totalSeconds = (hour * 60 + minute) * 60 + second;
 
     let totalSens =
@@ -157,11 +168,9 @@
   </div>
 </div>
 
-<Footer />
-
 <style>
   .converter-page {
-    height: calc(100vh - 80px);
+    height: calc(100vh - 64px - 50px - 8px);
     display: flex;
     flex-direction: column;
     justify-content: center;

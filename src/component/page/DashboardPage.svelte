@@ -20,7 +20,8 @@
   };
 
   function updateClock() {
-    let now = Date.now();
+    let offset = new Date().getTimezoneOffset() * 60 * 1000;
+    let now = Date.now() - offset;
 
     let second = Math.floor(now / 1000) % 60;
     let minute = Math.floor(now / 1000 / 60) % 60;
@@ -33,7 +34,7 @@
     };
 
     let totalSeconds = (hour * 60 + minute) * 60 + second;
-    
+
     let [hora, mei, sen] = traditionalSecondsToHoraTime(totalSeconds);
     nowHoraTime = {
       hora,
@@ -105,11 +106,10 @@
     <!-- Rules - End -->
   </div>
 </div>
-<Footer />
 
 <style>
   .dashboard-page {
-    height: calc(100vh - 80px);
+    height: calc(100vh - 64px - 50px - 8px);
     display: flex;
     flex-direction: column;
     justify-content: center;
