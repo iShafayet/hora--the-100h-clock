@@ -1,13 +1,10 @@
 <script lang="ts">
+  import Checkbox from "@smui/checkbox";
   import FormField from "@smui/form-field";
   import Textfield from "@smui/textfield";
-  import Checkbox from "@smui/checkbox";
   import { CommonConstant } from "../../constant/common-constants.js";
-  import {
-    epochToHoraTime,
-    traditionalSecondsToHoraTime,
-  } from "../../lib/date-helper.js";
-  import Footer from "../common/Footer.svelte";
+  import { traditionalSecondsToHoraTime } from "../../lib/date-helper.js";
+  import { normalizeConverter } from "../../store/common.js";
 
   let calcHoraTime = {
     hora: 0,
@@ -24,6 +21,9 @@
   };
 
   let shouldNormalizeTime = true;
+  normalizeConverter.subscribe((value) => {
+    shouldNormalizeTime = value;
+  });
 
   function calculateHoraToTrad() {
     console.log("START", calcHoraTime, calcTraditionalTime);
@@ -158,7 +158,7 @@
       <div class="group">
         <div class="group-title">Options:</div>
         <FormField>
-          <Checkbox bind:checked={shouldNormalizeTime} />
+          <Checkbox bind:checked={$normalizeConverter} />
           <span slot="label">Normalize time before conversion.</span>
         </FormField>
       </div>
