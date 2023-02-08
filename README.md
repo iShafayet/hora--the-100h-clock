@@ -1,6 +1,6 @@
 # hora--the-100h-clock
 
-An alternative take on time keeping.
+An alternative take on time keeping. Essentially, a thought experiment given shape: What if our timekeeping units were base 10 based.
 
 ## To run locally (dockerized)
 
