@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { CommonConstant } from "../../constant/common-constants.js";
-  import {
-    epochToHoraTime,
-    traditionalSecondsToHoraTime,
-  } from "../../lib/date-helper.js";
   import type { HoraTime, TraditionalTime } from "src/model/common.js";
-  import Footer from "../common/Footer.svelte";
+  import { CommonConstant } from "../../constant/common-constants.js";
+  import { traditionalSecondsToHoraTime } from "../../lib/date-helper.js";
+  import { navigateToRoute } from "../../lib/navigation-helper.js";
+  import { showTraditionalClock } from "../../store/common.js";
 
   let nowHoraTime: HoraTime = {
     hora: 0,
@@ -75,22 +73,40 @@
 
       <!-- Traditional Time - Start -->
       <div class="traditional-time-wrapper">
-        <div class="label">Equivalent traditional time:</div>
-        <div class="traditional-time">
-          <div class="unit">
-            <div class="value">{nowTraditionalTime.hour}</div>
-            <div class="postfix">Hour</div>
+        {#if $showTraditionalClock}
+          <div class="label">Equivalent traditional time:</div>
+          <div class="traditional-time">
+            <div class="unit">
+              <div class="value">{nowTraditionalTime.hour}</div>
+              <div class="postfix">Hour</div>
+            </div>
+            <div class="unit">
+              <div class="value">{nowTraditionalTime.minute}</div>
+              <div class="postfix">Minute</div>
+            </div>
+            <div class="unit">
+              <div class="value">{nowTraditionalTime.second}</div>
+              <div class="postfix">Second</div>
+            </div>
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <span
+              class="equivalent-time-hider"
+              on:click={() => showTraditionalClock.update((value) => !value)}
+            >
+              (Hide)
+            </span>
           </div>
-          <div class="unit">
-            <div class="value">{nowTraditionalTime.minute}</div>
-            <div class="postfix">Minute</div>
-          </div>
-          <div class="unit">
-            <div class="value">{nowTraditionalTime.second}</div>
-            <div class="postfix">Second</div>
-          </div>
-        </div>
+        {:else}
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <span
+            class="equivalent-time-shower"
+            on:click={() => showTraditionalClock.update((value) => !value)}
+          >
+            Show equivalent traditional time
+          </span>
+        {/if}
       </div>
+
       <!-- Traditional Time - End -->
     </div>
 
@@ -101,6 +117,12 @@
         <li>Every day has 100 <span class="unit">Horas</span>.</li>
         <li>Every Hora has 10 <span class="unit">Meis</span>.</li>
         <li>Every Mei has 100 <span class="unit">Sens</span>.</li>
+        <li>
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <span class="link" on:click={() => navigateToRoute("/philosophy")}
+            >Learn more</span
+          >.
+        </li>
       </ul>
     </div>
     <!-- Rules - End -->
@@ -223,6 +245,7 @@
 
   .traditional-time {
     display: flex;
+    align-items: flex-end;
   }
 
   .traditional-time .unit {
@@ -271,5 +294,21 @@
 
   .rules .unit {
     text-decoration: underline;
+  }
+
+  .link,
+  .equivalent-time-shower,
+  .equivalent-time-hider {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .equivalent-time-shower,
+  .equivalent-time-hider {
+    font-size: 12px;
+  }
+
+  .equivalent-time-hider {
+    margin-left: 4px;
   }
 </style>
